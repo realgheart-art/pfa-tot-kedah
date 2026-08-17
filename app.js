@@ -8,7 +8,7 @@
    Biarkan kosong ('') untuk MOD DEMO (tiada backend, data
    disimpan pada peranti sahaja — sesuai untuk pratonton).
 ----------------------------------- */
-const API_URL = '';
+const API_URL = 'https://script.google.com/macros/s/AKfycby2AQOAVU2-syADPo0Z2ewnxh3Nkd3qQy7ukbf5NDsXznMznO1J6iOsckyHEFc7zCPhIw/exec';
 const LULUS   = 80;   // peratus minimum setiap kuiz unit
 const VERSI   = 'v1.0';
 
