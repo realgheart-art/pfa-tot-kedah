@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2F6E6B">
+<title>Latihan Jurulatih PFA — JPN Kedah</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="view-login">
+  <div class="login-box">
+    <div id="demoTag" class="demo-tag hidden">MOD DEMO</div>
+    <div class="brand">Latihan Jurulatih<br>Bantuan Awal Psikologi</div>
+    <div class="sub">Kepimpinan Krisis &amp; PFA · JKN × JPN Kedah</div>
+
+    <div id="loginMsg"></div>
+
+    <div id="formLogin">
+      <div class="field">
+        <label for="inEmel">Alamat e-mel</label>
+        <input type="email" id="inEmel" placeholder="nama@moe.gov.my" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="inPin">PIN</label>
+        <input type="password" id="inPin" placeholder="••••••" autocomplete="current-password" inputmode="numeric">
+      </div>
+      <button class="btn btn-block" id="btnLogin">Log masuk</button>
+      <div class="login-alt">
+        Belum berdaftar? <button id="lnkDaftar">Daftar sebagai peserta</button>
+      </div>
+    </div>
+
+    <div id="formDaftar" class="hidden">
+      <div class="field">
+        <label for="dNama">Nama penuh</label>
+        <input type="text" id="dNama" placeholder="Nama seperti dalam kad pengenalan">
+      </div>
+      <div class="field">
+        <label for="dEmel">Alamat e-mel</label>
+        <input type="email" id="dEmel" placeholder="nama@moe.gov.my">
+      </div>
+      <div class="field">
+        <label for="dPpd">PPD / Organisasi</label>
+        <select id="dPpd">
+          <option value="">— Pilih —</option>
+          <option>PPD Kota Setar</option><option>PPD Kubang Pasu</option>
+          <option>PPD Pendang</option><option>PPD Yan</option>
+          <option>PPD Kuala Muda / Sik</option><option>PPD Baling</option>
+          <option>PPD Padang Terap</option><option>PPD Kulim / Bandar Baharu</option>
+          <option>PPD Langkawi</option><option>PPD Pokok Sena</option>
+          <option>JPN Kedah</option><option>JKN Kedah</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="dSekolah">Sekolah / Unit</label>
+        <input type="text" id="dSekolah" placeholder="Contoh: SMK Sultanah Asma">
+      </div>
+      <div class="field">
+        <label for="dPin">Cipta PIN (6 digit)</label>
+        <input type="password" id="dPin" placeholder="••••••" inputmode="numeric" maxlength="6">
+      </div>
+      <button class="btn btn-block" id="btnDaftar">Daftar akaun</button>
+      <div class="login-alt">
+        Sudah ada akaun? <button id="lnkLogin">Log masuk</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="shell" class="hidden">
+  <nav class="topnav">
+    <div class="topnav-in">
+      <div class="logo">Latihan Jurulatih PFA<small>JPN KEDAH</small></div>
+      <div class="spacer"></div>
+      <div class="nav-links" id="navLinks">
+        <button data-go="dash" class="on">Dashboard</button>
+        <button data-go="sijil">Sijil</button>
+        <button data-go="admin" id="navAdmin" class="hidden">Pentadbiran</button>
+      </div>
+      <div class="who">
+        <div class="who-txt"><b id="whoNama">—</b><span id="whoPeranan">—</span></div>
+        <div class="avatar" id="whoAv">?</div>
+        <button class="btn btn-ghost btn-sm" id="btnKeluar">Keluar</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- DASHBOARD -->
+    <section id="view-dash" class="wrap"></section>
+    <!-- UNIT -->
+    <section id="view-unit" class="wrap hidden"></section>
+    <!-- KUIZ -->
+    <section id="view-kuiz" class="wrap-narrow hidden"></section>
+    <!-- SIJIL -->
+    <section id="view-sijil" class="wrap hidden"></section>
+    <!-- ADMIN -->
+    <section id="view-admin" class="wrap hidden"></section>
+  </main>
+
+  <div class="heal-strip">
+    Sokongan emosi: <b>Talian HEAL 15555</b> <span>· setiap hari 8:00 pagi – 12:00 tengah malam</span>
+  </div>
+</div>
+
+<div id="glossPop"></div>
+<div id="toast"></div>
+
+<script src="content.js"></script>
+<script src="soalan.js"></script>
+<script src="app.js"></script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>

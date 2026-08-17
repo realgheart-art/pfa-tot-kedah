@@ -1,0 +1,14 @@
+{
+  "name": "Latihan Jurulatih PFA — JPN Kedah",
+  "short_name": "Jurulatih PFA",
+  "description": "Modul latihan jurulatih Bantuan Awal Psikologi untuk warga pendidikan Kedah",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FAF6EF",
+  "theme_color": "#2F6E6B",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
