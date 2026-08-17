@@ -1,9 +1,10 @@
 /* sw.js — Service Worker
    PENTING: naikkan CACHE_VER setiap kali fail frontend diubah. */
-const CACHE_VER = 'pfa-tot-v1.0.0';
+const CACHE_VER = 'pfa-tot-v1.2.0';
 const FAIL = [
   './', './index.html', './styles.css',
-  './content.js', './soalan.js', './app.js', './manifest.json'
+  './content.js', './soalan.js', './app.js', './manifest.json',
+  './slaid.html'
 ];
 
 self.addEventListener('install', e => {
