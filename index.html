@@ -84,8 +84,15 @@
         <button data-go="dash" class="on">Dashboard</button>
         <button data-go="sijil">Sijil</button>
         <button data-go="admin" id="navAdmin" class="hidden">Pentadbiran</button>
+        <a class="nav-slaid" href="slaid.html" title="Buka slaid pembentangan 8 unit">◧ Slaid</a>
       </div>
       <div class="who">
+        <div class="paparan" id="paparan">
+          <button id="btnKecil" class="pbtn" title="Kecilkan teks" aria-label="Kecilkan teks">A−</button>
+          <span class="pskala" id="pSkala">100%</span>
+          <button id="btnBesar" class="pbtn" title="Besarkan teks" aria-label="Besarkan teks">A+</button>
+          <button id="btnBentang" class="pbtn pbtn-mode" title="Mod pembentangan (tekan P)" aria-label="Mod pembentangan">⛶ Bentang</button>
+        </div>
         <div class="who-txt"><b id="whoNama">—</b><span id="whoPeranan">—</span></div>
         <div class="avatar" id="whoAv">?</div>
         <button class="btn btn-ghost btn-sm" id="btnKeluar">Keluar</button>
@@ -108,6 +115,12 @@
 
   <div class="heal-strip">
     Sokongan emosi: <b>Talian HEAL 15555</b> <span>· setiap hari 8:00 pagi – 12:00 tengah malam</span>
+  </div>
+
+  <div id="stepBar" class="step-bar hidden">
+    <button class="sb-btn" id="sbPrev" aria-label="Bahagian sebelum">‹</button>
+    <span class="sb-kira"><b id="sbKini">1</b> / <span id="sbJum">1</span></span>
+    <button class="sb-btn" id="sbNext" aria-label="Bahagian seterusnya">›</button>
   </div>
 </div>
 
