@@ -397,10 +397,11 @@ table.tbl tr:hover td{background:var(--cream)}
 .empty .ic{font-size:2rem;margin-bottom:.4em}
 
 /* toast */
-#toast{position:fixed;bottom:52px;left:50%;transform:translateX(-50%) translateY(120%);z-index:80;
+#toast{position:fixed;bottom:52px;left:50%;transform:translateX(-50%) translateY(160%);z-index:80;
   background:var(--slate);color:#fff;padding:.8em 1.3em;border-radius:999px;font-size:.87rem;
-  box-shadow:var(--shadow-l);transition:transform .3s ease;max-width:90vw;text-align:center}
-#toast.show{transform:translateX(-50%) translateY(0)}
+  box-shadow:var(--shadow-l);transition:transform .3s ease,opacity .3s ease;max-width:90vw;text-align:center;
+  opacity:0;visibility:hidden}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
 
 @media print{
   .topnav,.heal-strip,#toast,.no-print{display:none !important}
@@ -408,3 +409,132 @@ table.tbl tr:hover td{background:var(--cream)}
   .sijil{box-shadow:none;border:none}
   main{padding:0}
 }
+
+/* ============================================================
+   KAWALAN PAPARAN — saiz teks & mod pembentangan
+   ============================================================ */
+
+/* Skala teks global. --skala ditetapkan pengguna (A− / A+),
+   --bmul ditambah automatik apabila mod pembentangan aktif. */
+html{ font-size: calc(16px * var(--skala, 1) * var(--bmul, 1)); }
+
+.paparan{ display:flex; align-items:center; gap:4px; margin-right:10px; }
+.pbtn{
+  font-family:var(--f-body); font-size:.8rem; font-weight:700; cursor:pointer;
+  background:var(--cream-2); border:1px solid var(--line); color:var(--slate);
+  border-radius:9px; padding:.36em .6em; line-height:1; transition:.15s; white-space:nowrap;
+}
+.pbtn:hover{ background:#fff; border-color:var(--sage); color:var(--teal-deep); }
+.pbtn:disabled{ opacity:.35; cursor:default; }
+.pbtn-mode{ margin-left:6px; }
+.pbtn-mode.on{ background:var(--teal); border-color:var(--teal); color:#fff; }
+.pskala{
+  font-size:.72rem; font-weight:700; color:var(--slate-soft);
+  min-width:3.2em; text-align:center; font-variant-numeric:tabular-nums;
+}
+@media(max-width:900px){ .pskala{ display:none; } .pbtn-mode{ display:none; } }
+
+/* ---------- MOD PEMBENTANGAN ---------- */
+body.bentang{ background:var(--cream); }
+
+/* ruang lebih lebar untuk skrin projektor */
+body.bentang .wrap{ max-width:1680px; }
+body.bentang .wrap-narrow{ max-width:1280px; }
+
+/* topnav dipermudah — kurangkan gangguan visual di skrin besar */
+body.bentang .who-txt,
+body.bentang .avatar,
+body.bentang #btnKeluar{ display:none; }
+body.bentang .topnav{ padding:.35em 0; }
+body.bentang .logo small{ display:none; }
+/* Kawalan header tidak membesar bersama kandungan — penonton membaca
+   kandungan, bukan menu. Saiz px supaya bebas daripada --skala. */
+body.bentang .logo{ font-size:15px; white-space:nowrap; }
+body.bentang .nav-links button{ font-size:14px; white-space:nowrap; padding:.5em .8em; }
+body.bentang .pbtn{ font-size:12px; }
+body.bentang .pskala{ font-size:11px; }
+body.bentang .step-bar{ font-size:14px; }
+body.bentang .sb-kira{ font-size:13px; }
+body.bentang .heal-strip{ font-size:14px; }
+body.bentang .heal-strip b{ font-size:15px; }
+
+/* elemen interaktif dibesarkan supaya jelas dari belakang dewan */
+body.bentang .nafas-circle{ width:min(38vh,340px); height:min(38vh,340px); }
+body.bentang .nafas-circle b{ font-size:3rem; }
+body.bentang .nafas-kira{ font-size:1.05rem; }
+body.bentang .gr-num{ font-size:2.6rem; }
+body.bentang .pyr svg{ max-width:600px; }
+body.bentang .pyr-info{ min-height:230px; }
+body.bentang .pyr-info h4{ font-size:1.4rem; }
+body.bentang .pyr-info p{ font-size:1.1rem; line-height:1.6; }
+
+/* kad unit dashboard: grid lebih luas */
+body.bentang .unit-grid{ grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); }
+
+/* soalan kuiz lebih besar semasa dibentangkan berkumpulan */
+body.bentang .q-teks{ font-size:1.5rem; line-height:1.4; }
+body.bentang .opt{ padding:1em 1.2em; font-size:1.1rem; }
+
+/* jalur HEAL kekal saiz tetap — ia rujukan, bukan kandungan pembentangan */
+body.bentang .heal-strip{ padding:.6em; }
+
+/* ---------- langkah demi langkah (unit) ---------- */
+.pv-step{ display:block; }
+
+/* dalam mod bentang, hanya satu bahagian dipaparkan pada satu masa */
+body.bentang.melangkah #view-unit .pv-step{ display:none; }
+body.bentang.melangkah #view-unit .pv-step.kini{
+  display:block; animation:masuk .32s ease;
+}
+@keyframes masuk{ from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+@media (prefers-reduced-motion:reduce){
+  body.bentang.melangkah #view-unit .pv-step.kini{ animation:none; }
+}
+body.bentang.melangkah main{ padding-bottom:6rem; }
+
+/* bar navigasi bahagian */
+.step-bar{
+  position:fixed; right:1.4rem; bottom:4.2rem; z-index:60;
+  display:flex; align-items:center; gap:.5em;
+  background:var(--slate); color:#fff; border-radius:999px;
+  padding:.4em .6em; box-shadow:0 10px 26px -14px rgba(0,0,0,.45);
+}
+.step-bar.hidden{ display:none; }
+.sb-btn{
+  width:2.1em; height:2.1em; border-radius:50%; cursor:pointer;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.24);
+  color:#fff; font-size:1.15rem; line-height:1; font-family:var(--f-body);
+  display:flex; align-items:center; justify-content:center; transition:.15s;
+}
+.sb-btn:hover{ background:rgba(255,255,255,.26); }
+.sb-btn:disabled{ opacity:.3; cursor:default; }
+.sb-kira{
+  font-size:.85rem; font-weight:600; color:#CBD9D6;
+  min-width:3.6em; text-align:center; font-variant-numeric:tabular-nums;
+}
+.sb-kira b{ color:#fff; }
+
+/* petunjuk ringkas ketika mod bentang dihidupkan */
+.bentang-tip{
+  position:fixed; top:4.6rem; left:50%; transform:translateX(-50%); z-index:70;
+  background:var(--slate); color:#DFE8E6; font-size:.82rem; font-weight:600;
+  padding:.5em 1em; border-radius:999px; box-shadow:var(--shadow);
+  transition:opacity .5s; pointer-events:none;
+}
+
+/* cetakan tidak perlu kawalan paparan */
+@media print{ .paparan, .step-bar, .bentang-tip{ display:none !important; } }
+
+/* pada skrin sempit + teks dibesarkan, benarkan menu diskrol mendatar */
+@media(max-width:760px){
+  .nav-links{ overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .nav-links::-webkit-scrollbar{ display:none; }
+}
+
+/* pautan ke aplikasi slaid pembentangan */
+.nav-slaid{
+  font-family:var(--f-body);font-size:.88rem;font-weight:600;text-decoration:none;
+  color:var(--slate-soft);padding:.5em .9em;border-radius:9px;transition:.15s;white-space:nowrap;
+}
+.nav-slaid:hover{background:var(--cream-2);color:var(--teal-deep)}
+body.bentang .nav-slaid{font-size:14px}
