@@ -8,7 +8,7 @@
    Biarkan kosong ('') untuk MOD DEMO (tiada backend, data
    disimpan pada peranti sahaja — sesuai untuk pratonton).
 ----------------------------------- */
-const API_URL = 'https://script.google.com/macros/s/AKfycby2AQOAVU2-syADPo0Z2ewnxh3Nkd3qQy7ukbf5NDsXznMznO1J6iOsckyHEFc7zCPhIw/exec';
+const API_URL = '';
 const LULUS   = 80;   // peratus minimum setiap kuiz unit
 const VERSI   = 'v1.0';
 
@@ -177,8 +177,131 @@ function masukShell(){
   $('#whoPeranan').textContent = labelPeranan(SESI.peranan);
   $('#whoAv').textContent = initials(SESI.nama);
   if(SESI.peranan === 'admin' || SESI.peranan === 'fasilitator') $('#navAdmin').classList.remove('hidden');
+  Paparan.pasang();
   pergi('dash');
 }
+
+/* ==========================================================
+   PAPARAN — saiz teks & mod pembentangan
+   ========================================================== */
+const Paparan = (() => {
+  const SKALA = [1, 1.15, 1.32, 1.5, 1.75];   // aras saiz teks
+  const BENTANG_MUL = 1.22;                    // pembesar tambahan bila membentang
+  let aras = 0, bentang = false;
+  let langkah = [], kini = 0;
+
+  function guna(){
+    document.documentElement.style.setProperty('--skala', SKALA[aras]);
+    document.documentElement.style.setProperty('--bmul', bentang ? BENTANG_MUL : 1);
+    const s = $('#pSkala');
+    if(s) s.textContent = Math.round(SKALA[aras] * (bentang ? BENTANG_MUL : 1) * 100) + '%';
+    const bk = $('#btnKecil'), bb = $('#btnBesar');
+    if(bk) bk.disabled = (aras === 0);
+    if(bb) bb.disabled = (aras === SKALA.length - 1);
+  }
+
+  function simpanTetapan(){
+    Simpan.set('paparan', JSON.stringify({ aras, bentang }));
+  }
+
+  function tukarBentang(nilai){
+    bentang = (nilai === undefined) ? !bentang : !!nilai;
+    document.body.classList.toggle('bentang', bentang);
+    const b = $('#btnBentang');
+    if(b){ b.classList.toggle('on', bentang); b.textContent = bentang ? '⛶ Keluar bentang' : '⛶ Bentang'; }
+    guna(); simpanTetapan(); kemasLangkah();
+    if(bentang) tunjukTip();
+  }
+
+  function tunjukTip(){
+    const lama = document.querySelector('.bentang-tip'); if(lama) lama.remove();
+    const t = document.createElement('div');
+    t.className = 'bentang-tip';
+    t.textContent = 'Mod pembentangan  ·  ← → bahagian  ·  P untuk keluar';
+    document.body.appendChild(t);
+    setTimeout(()=>{ t.style.opacity = '0'; }, 4200);
+    setTimeout(()=>{ t.remove(); }, 5000);
+  }
+
+  /* --- langkah demi langkah dalam paparan unit --- */
+  function kemasLangkah(){
+    const unitAktif = !$('#view-unit').classList.contains('hidden');
+    langkah = unitAktif ? $$('#view-unit .pv-step') : [];
+    const guna_ = bentang && langkah.length > 1;
+
+    document.body.classList.toggle('melangkah', guna_);
+    const bar = $('#stepBar');
+    if(bar) bar.classList.toggle('hidden', !guna_);
+
+    if(guna_){
+      if(kini >= langkah.length) kini = 0;
+      papar(kini);
+      const j = $('#sbJum'); if(j) j.textContent = langkah.length;
+    } else {
+      langkah.forEach(el => el.classList.remove('kini'));
+    }
+  }
+
+  function papar(i){
+    if(!langkah.length) return;
+    kini = Math.max(0, Math.min(i, langkah.length - 1));
+    langkah.forEach((el, n) => el.classList.toggle('kini', n === kini));
+    const k = $('#sbKini'); if(k) k.textContent = kini + 1;
+    const p = $('#sbPrev'), n = $('#sbNext');
+    if(p) p.disabled = (kini === 0);
+    if(n) n.disabled = (kini === langkah.length - 1);
+    window.scrollTo({ top:0, behavior:'instant' });
+  }
+
+  function maju(){ papar(kini + 1); }
+  function undur(){ papar(kini - 1); }
+  function reset(){ kini = 0; kemasLangkah(); }
+
+  function pasang(){
+    /* pulihkan tetapan tersimpan */
+    try{
+      const t = JSON.parse(Simpan.get('paparan') || '{}');
+      if(typeof t.aras === 'number') aras = Math.max(0, Math.min(t.aras, SKALA.length - 1));
+      if(t.bentang) bentang = true;
+    }catch(e){}
+    document.body.classList.toggle('bentang', bentang);
+    const b = $('#btnBentang');
+    if(b){ b.classList.toggle('on', bentang); b.textContent = bentang ? '⛶ Keluar bentang' : '⛶ Bentang'; }
+    guna();
+
+    const bk = $('#btnKecil'), bb = $('#btnBesar');
+    if(bk) bk.onclick = ()=>{ if(aras > 0){ aras--; guna(); simpanTetapan(); } };
+    if(bb) bb.onclick = ()=>{ if(aras < SKALA.length - 1){ aras++; guna(); simpanTetapan(); } };
+    if(b)  b.onclick  = ()=> tukarBentang();
+
+    const sp = $('#sbPrev'), sn = $('#sbNext');
+    if(sp) sp.onclick = undur;
+    if(sn) sn.onclick = maju;
+
+    document.addEventListener('keydown', (e)=>{
+      const dlmMedan = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''));
+      if(dlmMedan) return;
+
+      /* Ctrl/Cmd + dan − untuk saiz teks */
+      if((e.ctrlKey || e.metaKey) && (e.key === '=' || e.key === '+')){
+        e.preventDefault(); if(aras < SKALA.length-1){ aras++; guna(); simpanTetapan(); } return;
+      }
+      if((e.ctrlKey || e.metaKey) && e.key === '-'){
+        e.preventDefault(); if(aras > 0){ aras--; guna(); simpanTetapan(); } return;
+      }
+      if(e.ctrlKey || e.metaKey || e.altKey) return;
+
+      if(e.key === 'p' || e.key === 'P'){ e.preventDefault(); tukarBentang(); return; }
+      if(!document.body.classList.contains('melangkah')) return;
+      if(e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' '){ e.preventDefault(); maju(); }
+      else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); undur(); }
+      else if(e.key === 'Home'){ e.preventDefault(); papar(0); }
+      else if(e.key === 'End'){ e.preventDefault(); papar(langkah.length - 1); }
+    });
+  }
+
+  return { pasang, reset, kemasLangkah, tukarBentang };
+})();
 
 /* ==========================================================
    PENGHALAAN
@@ -192,6 +315,7 @@ function pergi(view, arg){
   if(view==='kuiz')  { $('#view-kuiz').classList.remove('hidden');  mulaKuiz(arg); }
   if(view==='sijil') { $('#view-sijil').classList.remove('hidden'); renderSijil(); }
   if(view==='admin') { $('#view-admin').classList.remove('hidden'); renderAdmin(); }
+  if(typeof Paparan !== 'undefined') Paparan.reset();
 }
 
 /* ==========================================================
@@ -315,18 +439,18 @@ function renderUnit(id){
   idWhy = 0;
 
   let h = `<button class="btn btn-ghost btn-sm" id="btnBalik">← Dashboard</button>
-  <div class="unit-head mt">
+  <div class="pv-step"><div class="unit-head mt">
     <div class="eyebrow">Unit ${u.id} · ${esc(u.tempoh)}</div>
     <h1>${esc(u.tajuk)}</h1>
     <p>${esc(u.ringkas)}</p>
     <div class="obj-list"><b>Objektif Pembelajaran</b><ul>
       ${u.objektif.map(o=>`<li>${esc(o)}</li>`).join('')}
     </ul></div>
-  </div>`;
+  </div></div>`;
 
-  u.seksyen.forEach(s=>{ h += renderSeksyen(s); });
+  u.seksyen.forEach(s=>{ h += `<div class="pv-step">${renderSeksyen(s)}</div>`; });
 
-  h += `<div class="card mt2 center">
+  h += `<div class="pv-step"><div class="card mt2 center">
     <h3>Uji kefahaman anda</h3>
     <p class="muted small" style="margin:.4em 0 1.1em">
       ${esc(u.gayaKuiz)} · ${soalanUnit(u.id).length} soalan · perlu ${LULUS}% untuk lulus
@@ -339,7 +463,7 @@ function renderUnit(id){
   h += `<div class="quiz-nav mt2">
     ${prev ? `<button class="btn btn-ghost" data-nav="${prev.id}">← Unit ${prev.id}</button>` : '<span></span>'}
     ${next ? `<button class="btn btn-ghost" data-nav="${next.id}">Unit ${next.id} →</button>` : '<span></span>'}
-  </div>`;
+  </div></div>`;
 
   const v = $('#view-unit'); v.innerHTML = h;
 
