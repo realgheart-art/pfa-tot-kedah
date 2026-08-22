@@ -350,7 +350,35 @@ main{padding:clamp(22px,4vw,44px) 0 90px}
 /* ==========================================================
    SIJIL
    ========================================================== */
-.sijil{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,5vw,52px);
+.sijil{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(30px,4vw,54px) clamp(30px,4vw,54px) clamp(38px,4vw,58px);
+  position:relative;max-width:1000px;margin:0 auto;min-height:680px}
+.sijil::before{content:"";position:absolute;inset:12px;border:2px solid var(--sage-soft);border-radius:12px;pointer-events:none}
+.sijil-in{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;text-align:center}
+.sijil .sijil-logo{display:flex;align-items:center;justify-content:center;gap:clamp(14px,2.5vw,28px);margin-bottom:.9em}
+.sijil .logo-kotak{flex:none;width:clamp(52px,7vw,68px);height:clamp(52px,7vw,68px);border-radius:14px;
+  background:linear-gradient(150deg,var(--teal),var(--teal-deep));color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:var(--f-head);font-weight:700;font-size:clamp(.95rem,1.7vw,1.15rem);line-height:1;
+  border:1px solid rgba(255,255,255,.2)}
+.sijil .logo-kotak small{font-size:.52em;font-weight:600;letter-spacing:.05em;margin-top:.25em;opacity:.85}
+.sijil .logo-kotak.jkn{background:linear-gradient(150deg,var(--sage),#7d9c62)}
+.sijil .logo-teks{display:flex;flex-direction:column;gap:.2em;max-width:340px}
+.sijil .logo-teks b{font-family:var(--f-head);font-size:clamp(.86rem,1.6vw,1rem);color:var(--teal-deep);line-height:1.2}
+.sijil .logo-teks span{font-size:clamp(.68rem,1.2vw,.78rem);color:var(--slate-soft)}
+.sijil h2{font-family:var(--f-head);font-size:clamp(1.4rem,3.4vw,2.1rem);margin:.35em 0 .12em;color:var(--slate)}
+.sijil .sub{color:var(--slate-soft);font-size:clamp(.78rem,1.4vw,.9rem);line-height:1.5}
+.sijil .diberi{font-size:clamp(.78rem,1.3vw,.88rem);color:var(--slate-soft);margin-top:.9em}
+.sijil .nama{font-family:var(--f-head);font-size:clamp(1.6rem,4.2vw,2.4rem);color:var(--teal-deep);
+  margin:.15em auto .1em;padding:0 .8em .12em;border-bottom:1px solid var(--line);display:inline-block}
+.sijil .peranan{font-size:clamp(.8rem,1.4vw,.92rem);color:var(--slate-soft)}
+.sijil .badan{font-size:clamp(.82rem,1.5vw,.98rem);line-height:1.65;max-width:64ch;margin:1em auto .6em;color:var(--slate)}
+.sijil .sijil-nota{font-size:clamp(.68rem,1.2vw,.78rem);color:var(--slate-soft);font-style:italic;
+  max-width:56ch;margin:0 auto;line-height:1.5}
+.sijil-foot{display:flex;justify-content:space-around;gap:1.4em;margin-top:auto;padding-top:1em;flex-wrap:wrap;font-size:.8rem}
+.sijil-foot div{flex:1;min-width:150px}
+.sijil-foot .line{border-top:1px solid var(--line-2);padding-top:.5em;margin-top:1.6em;color:var(--slate-soft)}
+.sijil-foot b{color:var(--slate);display:block}
+.sijil .no{margin-top:1em;font-size:clamp(.66rem,1.1vw,.74rem);color:var(--slate-faint);letter-spacing:.05em}
   box-shadow:var(--shadow-l);text-align:center;position:relative;overflow:hidden;
   background-image:radial-gradient(circle at 12% 8%,rgba(156,179,128,.10),transparent 42%),
                    radial-gradient(circle at 88% 92%,rgba(47,110,107,.10),transparent 42%)}
@@ -404,9 +432,10 @@ table.tbl tr:hover td{background:var(--cream)}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
 
 @media print{
+  @page{ size:A4 landscape; margin:12mm; }
   .topnav,.heal-strip,#toast,.no-print{display:none !important}
   body{background:#fff}
-  .sijil{box-shadow:none;border:none}
+  .sijil{box-shadow:none;border:none;max-width:100%;aspect-ratio:auto;height:auto;min-height:180mm}
   main{padding:0}
 }
 
