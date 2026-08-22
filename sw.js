@@ -1,6 +1,6 @@
 /* sw.js — Service Worker
    PENTING: naikkan CACHE_VER setiap kali fail frontend diubah. */
-const CACHE_VER = 'pfa-tot-v1.2.0';
+const CACHE_VER = 'pfa-tot-v1.2.2';
 const FAIL = [
   './', './index.html', './styles.css',
   './content.js', './soalan.js', './app.js', './manifest.json',
