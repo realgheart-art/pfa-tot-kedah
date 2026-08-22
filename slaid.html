@@ -31,7 +31,13 @@ body{font-family:var(--f-body);background:#16302E;color:var(--slate);-webkit-fon
   display:flex;flex-direction:column;transition:width .25s ease;overflow:hidden;
 }
 .sb.tutup{width:0}
-.sb-atas{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
+.sb-atas{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.12)}
+.sb-balik{
+  display:inline-block;text-decoration:none;font-size:.76rem;font-weight:600;
+  color:#9FB5B2;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+  border-radius:8px;padding:.4em .75em;margin-bottom:12px;transition:.15s;
+}
+.sb-balik:hover{background:rgba(255,255,255,.2);color:#fff}
 .sb-atas .jenama{font-family:var(--f-head);font-weight:600;font-size:1.05rem;line-height:1.2;white-space:nowrap}
 .sb-atas small{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-soft);margin-top:.35em}
 .sb-list{flex:1;overflow-y:auto;padding:10px 10px 14px}
@@ -229,6 +235,12 @@ ul.s-poin.padat li{font-size:1.1em}
 }
 .kawal button:hover{background:rgba(255,255,255,.22);color:#fff}
 .kawal button:disabled{opacity:.3;cursor:default}
+.kawal .kbalik{
+  font-family:inherit;font-size:14px;font-weight:600;text-decoration:none;color:#DCE7E4;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;padding:7px 14px;transition:.15s;white-space:nowrap;
+}
+.kawal .kbalik:hover{background:rgba(255,255,255,.22);color:#fff}
 .kawal .kira{font-size:14px;font-weight:700;color:#fff;padding:0 10px;min-width:74px;text-align:center;font-variant-numeric:tabular-nums}
 .kawal .kira small{display:block;font-size:11px;font-weight:500;color:#9FB5B2}
 
@@ -253,6 +265,7 @@ ul.s-poin.padat li{font-size:1.1em}
 <div class="app">
   <aside class="sb" id="sb">
     <div class="sb-atas">
+      <a class="sb-balik" href="index.html">← Dashboard</a>
       <div class="jenama">Modul PFA</div>
       <small>JPN Kedah × JKN Kedah</small>
     </div>
@@ -270,6 +283,7 @@ ul.s-poin.padat li{font-size:1.1em}
 </div>
 
 <div class="kawal">
+  <a class="kbalik" href="index.html" title="Kembali ke dashboard">← Dashboard</a>
   <button id="bSb" title="Sembunyi/papar senarai unit">☰</button>
   <button id="bPrev">‹</button>
   <div class="kira"><span id="kNo">1 / 1</span><small id="kUnit">Unit 1</small></div>
