@@ -415,7 +415,7 @@ function renderDash(){
   h += `<div class="cert-banner ${layak?'':'locked'}">
     <div class="ci">${layak?'🎓':'🔒'}</div>
     <div>
-      <h3>${layak?'Sijil Tauliah Jurulatih tersedia':'Sijil Tauliah Jurulatih'}</h3>
+      <h3>${layak?'Sijil penamatan tersedia':'Sijil Penamatan Latihan'}</h3>
       <p>${layak
         ? 'Tahniah — anda telah melengkapkan kesemua lapan kuiz unit pada tahap yang ditetapkan.'
         : `Perlu lulus kesemua ${st.jumlah} kuiz unit pada ${LULUS}% ke atas. Setakat ini: <b>${st.lulus}/${st.jumlah}</b>.`}</p>
@@ -822,7 +822,7 @@ async function renderSijil(){
     v.innerHTML = `<div class="empty card">
       <div class="ic">🔒</div>
       <h3>Sijil belum tersedia</h3>
-      <p class="muted mt">Sijil Tauliah Jurulatih dikeluarkan setelah anda lulus kesemua
+      <p class="muted mt">Sijil penamatan latihan dikeluarkan setelah anda lulus kesemua
       ${st.jumlah} kuiz unit pada ${LULUS}% ke atas.<br>Setakat ini: <b>${st.lulus}/${st.jumlah}</b> unit.</p>
       <button class="btn mt" onclick="pergi('dash')">Kembali ke dashboard</button>
     </div>`;
@@ -844,24 +844,35 @@ async function renderSijil(){
     <button class="btn btn-sm" onclick="window.print()">Cetak / Simpan PDF</button>
   </div>
   <div class="sijil"><div class="sijil-in">
-    <div class="kop">Jabatan Pendidikan Negeri Kedah · Jabatan Kesihatan Negeri Kedah</div>
-    <h2>Sijil Tauliah Jurulatih</h2>
-    <div class="sub">Modul Kepimpinan Krisis dan Bantuan Awal Psikologi<br>(<i>Psychological First Aid</i>) Untuk Warga Pendidikan</div>
+    <div class="sijil-logo">
+      <div class="logo-kotak">JPN<br><small>Kedah</small></div>
+      <div class="logo-teks">
+        <b>Jabatan Pendidikan Negeri Kedah</b>
+        <span>dengan kerjasama Jabatan Kesihatan Negeri Kedah</span>
+      </div>
+      <div class="logo-kotak jkn">JKN<br><small>Kedah</small></div>
+    </div>
 
+    <h2>Sijil Penyertaan &amp; Penamatan Latihan</h2>
+    <div class="sub">Program Latihan Dalam Talian · Kepimpinan Krisis dan Bantuan Awal Psikologi<br>(<i>Psychological First Aid</i>) Untuk Warga Pendidikan</div>
+
+    <div class="diberi">Dengan ini disahkan bahawa</div>
     <div class="nama">${esc(SESI.nama)}</div>
     <div class="peranan">${esc(SESI.sekolah || '')}${SESI.sekolah && SESI.ppd ? ' · ' : ''}${esc(SESI.ppd || '')}</div>
 
-    <p class="badan">telah melengkapkan kesemua lapan unit modul latihan ini dan mencapai
-    tahap penguasaan yang ditetapkan dalam setiap penilaian, dengan purata skor
-    <b>${purata}%</b>. Beliau dengan ini ditauliahkan sebagai <b>Jurulatih Bantuan Awal
-    Psikologi</b> yang berkelayakan menyampaikan modul ini kepada warga pendidikan
-    di peringkat sekolah dan daerah.</p>
+    <p class="badan">telah mengikuti dan <b>berjaya menamatkan</b> kesemua lapan unit modul latihan
+    dalam Sistem Latihan TOT PFA, serta lulus setiap penilaian dengan purata skor
+    <b>${purata}%</b>. Penyertaan ini mencerminkan komitmen beliau untuk memperkasa
+    kesiapsiagaan psikososial dalam kalangan warga pendidikan.</p>
+
+    <div class="sijil-nota">Sijil ini mengiktiraf penamatan latihan dalam talian dan
+    bukan merupakan penauliahan rasmi sebagai jurulatih.</div>
 
     <div class="sijil-foot">
-      <div><div class="line"><b>Pengarah</b>Jabatan Pendidikan Negeri Kedah</div></div>
-      <div><div class="line"><b>Pengarah</b>Jabatan Kesihatan Negeri Kedah</div></div>
+      <div><div class="line"><b>Tarikh Penamatan</b>${tarikhTeks}</div></div>
+      <div><div class="line"><b>Pengesahan Sistem</b>Sistem Latihan TOT PFA · JPN Kedah</div></div>
     </div>
-    <div class="no">No. Sijil: ${esc(no)} · Tarikh: ${tarikhTeks} · ${VERSI}</div>
+    <div class="no">No. Rujukan: ${esc(no)} · ${VERSI}</div>
   </div></div>`;
 }
 
@@ -891,7 +902,7 @@ async function renderAdmin(){
   <div class="stat-row">
     <div class="stat"><b>${jum}</b><span>Jumlah peserta</span></div>
     <div class="stat"><b>${aktif}</b><span>Telah bermula</span></div>
-    <div class="stat"><b>${tauliah}</b><span>Layak ditauliahkan</span></div>
+    <div class="stat"><b>${tauliah}</b><span>Layak sijil</span></div>
     <div class="stat"><b>${purata}%</b><span>Purata skor kuiz</span></div>
   </div>`;
 
@@ -924,7 +935,7 @@ async function renderAdmin(){
         <td>${esc(s.ppd||'—')}</td>
         <td><span class="pill grey">${esc(labelPeranan(s.peranan))}</span></td>
         <td>${lulus} / ${UNITS.length}</td>
-        <td>${siap?`<span class="pill sage">Ditauliahkan</span>`:`<span class="pill grey">Dalam proses</span>`}</td>
+        <td>${siap?`<span class="pill sage">Selesai</span>`:`<span class="pill grey">Dalam proses</span>`}</td>
       </tr>`;
     });
     h += `</table></div>`;
